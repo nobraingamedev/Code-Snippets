@@ -3,10 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Code Snippets</title>
+    <script>
+        const snippets = [
+            {title: "Follow Mouse Pointer", href: "Snippets/Follow Mouse Pointer.html"},
+            {title: "Walking", href: "Snippets/Walking.html"}
+        ];
+    </script>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: white;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #6495ED;
+            padding-bottom: 12px;
+        }
+        h1 {
+            color: #6495ED;
+            font-size: 32px;
+            margin: 0;
+        }
+        #search {
+            padding: 8px 15px;
+            font-size: 15px;
+            border: 2px solid #6495ED;
+            border-radius: 6px;
+            outline: none;
+            width: 250px;
+            transition: all 0.2s ease;
+        }
+        #search:focus {
+            border-color: #4169E1;
+            box-shadow: 0 0 8px rgba(100, 149, 237, 0.3);
+        }
+        #snippet-list {
+            list-style: none;
+        }
+        #snippet-list li {
+            margin: 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        #snippet-list li:last-child {
+            border-bottom: none;
+        }
+        #snippet-list a {
+            display: block;
+            text-decoration: none;
+            color: #333;
+            font-size: 17px;
+            padding: 16px 12px;
+            transition: all 0.2s ease;
+            border-left: 4px solid transparent;
+        }
+        #snippet-list a:hover {
+            background: #f8f9ff;
+            border-left-color: #6495ED;
+            padding-left: 20px;
+            color: #6495ED;
+        }
+    </style>
 </head>
 <body>
-    <a href="Snippets/Follow Mouse Pointer.html">Follow Mouse Pointer</a>
-    <a href="Snippets/Walking.html">Walking</a>
+    <div class="header">
+        <h1>Code Snippets</h1>
+        <input type="search" id="search" placeholder="Search snippets...">
+    </div>
+
+     <ul id="snippet-list"></ul>
+    <script>
+        const container = document.getElementById('snippet-list');
+        const searchInput = document.getElementById('search');
+        
+        snippets.forEach(snippet => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = snippet.href;
+            a.textContent = snippet.title;
+            li.appendChild(a);
+            container.appendChild(li);
+        });
+
+        // Auto-focus search bar
+        searchInput.focus();
+
+        // Search functionality
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const items = container.getElementsByTagName('li');
+            
+            Array.from(items).forEach(item => {
+                const title = item.textContent.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
